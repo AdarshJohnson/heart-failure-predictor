@@ -1,0 +1,35 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heart Failure Risk Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>💓 Heart Failure Risk Predictor</h1>
+
+    <form method="POST">
+      {% for field in ["age", "anaemia", "creatinine_phosphokinase", "diabetes",
+                       "ejection_fraction", "high_blood_pressure", "platelets",
+                       "serum_creatinine", "serum_sodium", "sex", "smoking", "time"] %}
+        <div class="input-group">
+          <label for="{{ field }}">{{ field.replace("_", " ").title() }}</label>
+          <input type="number" step="any" name="{{ field }}" required>
+        </div>
+      {% endfor %}
+
+      <button type="submit">Predict</button>
+    </form>
+
+        {% if prediction %}
+      <div class="result">
+        <h2>🩺 Result: {{ prediction }}</h2>
+      </div>
+    {% elif error %}
+      <div class="error">
+        <p>{{ error }}</p>
+      </div>
+    {% endif %}
+
